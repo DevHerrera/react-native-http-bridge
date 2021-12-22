@@ -71,18 +71,27 @@ public class Server extends NanoHTTPD {
         WritableMap request = Arguments.createMap();
         request.putString("url", session.getUri());
         request.putString("type", method.name());
-        request.putString("headers", session.getHeaders());
+//        request.putString("headers", session.getHeaders());
         request.putString("query", session.getQueryParameterString());
         request.putString("requestId", requestId);
-        
+        Map<String, String> headers = session.getHeaders();
         Map<String, String> files = new HashMap<>();
+        // Fill request body
         session.parseBody(files);
         if (files.size() > 0) {
           request.putString("postData", files.get("postData"));
         }
+        // Fill request headers 
+        session.parseBody(headers);
+        if (headers.size() > 0) {
+          String[] headersData;
+          for (Map.Entry<String,String> entry : headers.entrySet()) {
 
+          }
+          request.putString("headers", headers);
+        }
         return request;
-    }
+         }
 
     private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
