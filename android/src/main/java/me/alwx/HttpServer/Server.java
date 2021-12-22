@@ -84,7 +84,7 @@ public class Server extends NanoHTTPD {
         // Fill request headers 
         session.parseBody(headers);
         if (headers.size() > 0) {
-          String headerString; 
+          String headerString = ""; 
           for (Map.Entry<String,String> entry : headers.entrySet()) {
            headerString+= entry + "|" ;
           }
