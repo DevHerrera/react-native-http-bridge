@@ -84,11 +84,11 @@ public class Server extends NanoHTTPD {
         // Fill request headers 
         session.parseBody(headers);
         if (headers.size() > 0) {
-          String[] headersData;
+          String headerString; 
           for (Map.Entry<String,String> entry : headers.entrySet()) {
-
+           headerString+= entry + "|" 
           }
-          request.putString("headers", headers);
+          request.putString("headers", headerString);
         }
         return request;
          }
