@@ -86,7 +86,7 @@ public class Server extends NanoHTTPD {
         if (headers.size() > 0) {
           String headerString; 
           for (Map.Entry<String,String> entry : headers.entrySet()) {
-           headerString+= entry + "|" 
+           headerString+= entry + "|" ;
           }
           request.putString("headers", headerString);
         }
