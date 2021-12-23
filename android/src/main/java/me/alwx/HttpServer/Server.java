@@ -69,21 +69,23 @@ public class Server extends NanoHTTPD {
     private WritableMap fillRequestMap(IHTTPSession session, String requestId) throws Exception {
         Method method = session.getMethod();
         WritableMap request = Arguments.createMap();
+        // GET URL
         request.putString("url", session.getUri());
+        // GET HTTP METHOD
         request.putString("type", method.name());
-//        request.putString("headers", session.getHeaders());
-        request.putString("query", session.getQueryParameterString());
+        // GET REQUEST ID
         request.putString("requestId", requestId);
-        Map<String, String> headers = session.getHeaders();
+        // FILES (BODY)
         Map<String, String> files = new HashMap<>();
-        // Fill request body
         session.parseBody(files);
         if (files.size() > 0) {
           request.putString("postData", files.get("postData"));
         }
-        // Fill request headers 
-        session.parseBody(headers);
-        if (headers.size() > 0) {
+        // GET QUERY PARAMS
+        request.putString("query", session.getQueryParameterString());
+        // GET HEADERS
+         Map<String, String> headers = session.getHeaders();
+         if (headers.size() > 0) {
           String headerString = ""; 
           for (Map.Entry<String,String> entry : headers.entrySet()) {
            headerString+= entry + "|" ;
